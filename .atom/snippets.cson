@@ -1,0 +1,94 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+
+'.source.js':
+  'describe':
+    'prefix': 'des'
+    'body': """
+    describe("$1",()=>{
+      $0
+    }); // $1
+    """
+  'when':
+    'prefix': 'when'
+    'body': """
+    describe("when $1",()=>{
+      beforeEach(()=> spyOn(${2:moduleName},"$3").and.returnValue($4));
+      afterEach(()=> expect(${2:moduleName}.$3).toHaveBeenCalledWith($5));
+      $0
+    });
+      """
+  'it':
+    'prefix': 'it'
+    'body': """
+    it("should $1",()=>{
+      $0
+    });
+    """
+  'before':
+    'prefix': 'bef'
+    'body': """
+    beforeEach(()=>$0);
+    """
+  'after':
+    'prefix': 'aft'
+    'body': """
+    afterEach(()=>{
+      $0
+    });
+    """
+  'let1':
+    'prefix': 'let1'
+    'body': """
+    let $1;
+    beforeEach(()=>$1 = "{$1}");
+
+    $0
+    """
+  'let2':
+    'prefix': 'let2'
+    'body': """
+    let $1,$2;
+    beforeEach(()=>$1 = "{$1}");
+    beforeEach(()=>$2 = "{$2}");
+
+    $0
+    """
+  'let3':
+    'prefix': 'let3'
+    'body': """
+    let $1,$2,$3;
+    beforeEach(()=>$1 = "{$1}");
+    beforeEach(()=>$2 = "{$2}");
+    beforeEach(()=>$3 = "{$3}");
+
+    $0
+    """
+'.source.ts':
+  'importer':
+      'prefix': 'ngImp'
+      'body': 'import { $1 } from \'$2\'; $0'
+      
+'.text.html.basic':
+  'icon':
+      'prefix': 'icon'
+      'body': '<i class="fa fa-$1">$0</i>'

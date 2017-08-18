@@ -1,0 +1,38 @@
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "0b5a2cef-299b-42e9-b262-bf548222c067"
+    html:
+      beautify_on_save: true
+    typescript:
+      beautify_on_save: true
+  "atom-material-ui":
+    colors:
+      abaseColor: "#16e7ef"
+      accentColor: "#ff281f"
+      genAccent: true
+      predefinedColor: "Red"
+    fonts:
+      fontSize: 18
+    tabs:
+      noTabMinWidth: true
+      tintedTabBar: true
+    ui:
+      panelContrast: true
+      panelShadows: true
+  core:
+    disabledPackages: [
+      "language-gfm"
+    ]
+    telemetryConsent: "limited"
+    themes: [
+      "atom-material-ui"
+      "one-dark-syntax"
+    ]
+  editor:
+    fontSize: 15
+  "exception-reporting":
+    userId: "53ba16f5-a174-42eb-bb25-83e2f41d9318"
+  "linter-ui-default": {}
+  welcome:
+    showOnStartup: false
