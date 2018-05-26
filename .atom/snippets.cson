@@ -141,67 +141,63 @@
       'prefix': 'icon'
       'body': '<i class="fa fa-$1">$0</i>'
 
-'.source.vue':
-  'icon2':
-      'prefix': 'icon'
-      'body': '<i class="fa fa-$1">$0</i>'
-  #
-  # 'script':
-  #   'prefix': 'script'
-  #   'body': """
-  #   <script>
-  #   export default {
-  #     $0
-  #   }
-  #   </script>
-  #   """
-  # 'template2':
-  #   'prefix': 'template'
-  #   'body': """
-  #   <template>
-  #     $0
-  #   </template>
-  #   """
-  # 'methods':
-  #   'prefix':'methods'
-  #   'body': """
-  #   methods:{
-  #     $0
-  #   },
-  #   """
-  # 'components':
-  #   'prefix':'components'
-  #   'body': """
-  #   components:{
-  #     $0
-  #   },
-  #   """
-  # 'computed':
-  #   'prefix':'computed'
-  #   'body': """
-  #   computed:{
-  #     $0
-  #   },
-  #   """
-  # 'data func':
-  #   'prefix':'df'
-  #   'body': """
-  #   data(){
-  #     return {
-  #       $0
-  #       };
-  #   },
-  #   """
-  # 'props':
-  #   'prefix':'prop'
-  #   'body':"""
-  #     props: ['$1',],
-  #     $0
-  #     """
-  # 'data not function':
-  #   'prefix':'dnf'
-  #   'body': """
-  #   data:{
-  #     $0
-  #   }
-  #   """
+'.text.html.vue':
+  'script':
+    'prefix': 'script'
+    'body': """
+    <script>
+    export default {
+      $0
+    }
+    </script>
+    """
+  'template2':
+    'prefix': 'template'
+    'body': """
+    <template>
+      $0
+    </template>
+    """
+  'methods':
+    'prefix':'methods'
+    'body': """
+    methods:{
+      $0
+    },
+    """
+  'components':
+    'prefix':'components'
+    'body': """
+    components:{
+      $0
+    },
+    """
+  'computed':
+    'prefix':'computed'
+    'body': """
+    computed:{
+      $0
+    },
+    """
+  'data func':
+    'prefix':'df'
+    'body': """
+    data(){
+      return {
+        $0
+        };
+    },
+    """
+  'props':
+    'prefix':'prop'
+    'body':"""
+      props: ['$1',],
+      $0
+      """
+  'data not function':
+    'prefix':'dnf'
+    'body': """
+    data:{
+      $0
+    }
+    """
