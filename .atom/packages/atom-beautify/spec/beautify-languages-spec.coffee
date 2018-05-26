@@ -44,16 +44,17 @@ describe "BeautifyLanguages", ->
 
   # Activate all of the languages
   allLanguages = [
-    "c", "clojure", "coffee-script", "css", "d", "html",
-    "java", "javascript", "json", "less",
-    "mustache", "objective-c", "perl", "php",
-    "python", "ruby", "sass", "sql", "svg",
-    "xml", "csharp", "gfm", "marko",
-    "go", "html-swig", "lua"
+    "blade", "c", "clojure", "coffee-script", "css", "csharp", "d",
+    "gfm", "go", "html", "html-swig", "java", "javascript",
+    "json", "less", "lua", "marko", "mustache", "objective-c",
+    "perl", "php", "python", "ruby", "sass", "sql",
+    "svg", "xml"
     ]
   # All Atom packages that Atom Beautify is dependent on
   dependentPackages = [
     'autocomplete-plus'
+    'fuse'
+    'react'
     # 'linter'
     #   'atom-typescript' # it logs too much...
   ]

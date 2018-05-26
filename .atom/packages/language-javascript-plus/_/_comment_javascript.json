@@ -1,0 +1,87 @@
+{
+	"name": "JavaScriptPlus",
+	"scopeName": "source.js",
+	"injectionSelector": "L:source.js - text.html.js",
+	"patterns": [
+		{ "include": "#html" },
+		{ "include": "#css" }
+	],
+	"repository": {
+		"html": {
+			"begin": "(`)((\\s*)<!--(\\s*)html(\\s*)-->(\\s*))",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.begin.js"
+				},
+				"2": {
+					"name": "comment.block"
+				}
+			},
+			"end": "`",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.js"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string_escapes"
+				},
+				{
+					"include": "#interpolated_js"
+				},
+				{
+					"include": "#var"
+				},
+				{
+					"include": "text.html.basic"
+				}
+			]
+		},
+		"css": {
+			"begin": "(`)((\\s*)\\/\\*(\\s*)css(\\s*)\\*\\/(\\s*))",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.begin.js"
+				},
+				"2": {
+					"name": "comment.block"
+				}
+			},
+			"end": "`",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.js"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#string_escapes"
+				},
+				{
+					"include": "#interpolated_js"
+				},
+				{
+					"include": "#var"
+				},
+				{
+					"include": "source.css"
+				}
+			]
+		},
+		"var": {
+			"begin": "\\$\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "variable.language.js"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "variable.language.js"
+				}
+			}
+		}
+	}
+}

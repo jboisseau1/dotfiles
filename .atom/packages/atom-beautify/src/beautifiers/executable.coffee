@@ -49,6 +49,7 @@ class Executable
       .then(() => @)
       .catch((error) =>
         if not @.required
+          @verbose("Not required")
           @
         else
           Promise.reject(error)
@@ -133,7 +134,7 @@ class Executable
     @debug("Run: ", @cmd, args, options)
     { cmd, cwd, ignoreReturnCode, help, onStdin, returnStderr, returnStdoutOrStderr } = options
     exeName = cmd or @cmd
-    cwd ?= os.tmpDir()
+    cwd ?= os.tmpdir()
     help ?= {
       program: @cmd
       link: @installation or @homepage
@@ -213,7 +214,7 @@ class Executable
     Promise.all(args)
 
   relativizePaths: (args) ->
-    tmpDir = os.tmpDir()
+    tmpDir = os.tmpdir()
     newArgs = args.map((arg) ->
       isTmpFile = (typeof arg is 'string' and not arg.includes(':') and \
         path.isAbsolute(arg) and path.dirname(arg).startsWith(tmpDir))
@@ -366,6 +367,7 @@ class HybridExecutable extends Executable
 
   constructor: (options) ->
     super(options)
+    @verbose("HybridExecutable Options", options)
     if options.docker?
       @dockerOptions = Object.assign({}, @dockerOptions, options.docker)
       @docker = @constructor.dockerExecutable()
@@ -379,7 +381,7 @@ class HybridExecutable extends Executable
         homepage: "https://www.docker.com/"
         installation: "https://www.docker.com/get-docker"
         version: {
-          parse: (text) -> text.match(/version [0]*([1-9]\d*).[0]*([1-9]\d*).[0]*([1-9]\d*)/).slice(1).join('.')
+          parse: (text) -> text.match(/version [0]*([1-9]\d*).[0]*([0-9]\d*).[0]*([0-9]\d*)/).slice(1).join('.')
         }
       })
     return @docker
@@ -387,20 +389,44 @@ class HybridExecutable extends Executable
   installedWithDocker: false
   init: () ->
     super()
+      .then(() =>
+        return @
+      )
       .catch((error) =>
         return Promise.reject(error) if not @docker?
-        @docker.init()
-          .then(=> @runImage(@versionArgs, @versionRunOptions))
-          .then((text) => @saveVersion(text))
-          .then(() => @installedWithDocker = true)
-          .then(=> @)
-          .catch((dockerError) =>
-            @debug(dockerError)
-            Promise.reject(error)
-          )
+        return @
+      )
+      .then(() =>
+        shouldTryWithDocker = not @isInstalled and @docker?
+        @verbose("Executable shouldTryWithDocker", shouldTryWithDocker, @isInstalled, @docker?)
+        if shouldTryWithDocker
+          return @initDocker()
+        return @
+      )
+      .catch((error) =>
+        if not @.required
+          @verbose("Not required")
+          @
+        else
+          Promise.reject(error)
+      )
+
+  initDocker: () ->
+    @docker.init()
+      .then(=> @runImage(@versionArgs, @versionRunOptions))
+      .then((text) => @saveVersion(text))
+      .then(() => @installedWithDocker = true)
+      .then(=> @)
+      .catch((dockerError) =>
+        @debug(dockerError)
+        Promise.reject(dockerError)
       )
 
   run: (args, options = {}) ->
+    @verbose("Running HybridExecutable")
+    @verbose("installedWithDocker", @installedWithDocker)
+    @verbose("docker", @docker)
+    @verbose("docker.isInstalled", @docker and @docker.isInstalled)
     if @installedWithDocker and @docker and @docker.isInstalled
       return @runImage(args, options)
     super(args, options)
@@ -410,7 +436,7 @@ class HybridExecutable extends Executable
     this.resolveArgs(args)
       .then((args) =>
         { cwd } = options
-        tmpDir = os.tmpDir()
+        tmpDir = os.tmpdir()
         pwd = fs.realpathSync(cwd or tmpDir)
         image = @dockerOptions.image
         workingDir = @dockerOptions.workingDir
@@ -418,7 +444,7 @@ class HybridExecutable extends Executable
         rootPath = '/mountedRoot'
         newArgs = args.map((arg) ->
           if (typeof arg is 'string' and not arg.includes(':') \
-            and path.isAbsolute(arg) and not path.dirname(arg).startsWith(tmpDir))
+            and path.isAbsolute(arg) and not path.dirname(arg).startsWith(tmpDir)) \
             then path.join(rootPath, arg) else arg
         )
 
@@ -430,7 +456,7 @@ class HybridExecutable extends Executable
             image,
             newArgs
           ],
-          options
+          Object.assign({}, options, { cmd: undefined })
         )
       )
 

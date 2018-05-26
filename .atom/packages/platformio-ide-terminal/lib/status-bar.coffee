@@ -6,6 +6,7 @@ StatusIcon = require './status-icon'
 
 os = require 'os'
 path = require 'path'
+_ = require 'underscore'
 
 module.exports =
 class StatusBar extends View
@@ -34,6 +35,7 @@ class StatusBar extends View
         return unless @activeTerminal
         return if @activeTerminal.isAnimating()
         @activeTerminal.open() if @activePrevTerminalView()
+      'platformio-ide-terminal:clear': => @clear()
       'platformio-ide-terminal:close': => @destroyActiveTerm()
       'platformio-ide-terminal:close-all': => @closeAll()
       'platformio-ide-terminal:rename': => @runInActiveView (i) -> i.rename()
@@ -149,9 +151,17 @@ class StatusBar extends View
     shell = atom.config.get 'platformio-ide-terminal.core.shell'
     shellArguments = atom.config.get 'platformio-ide-terminal.core.shellArguments'
     args = shellArguments.split(/\s+/g).filter (arg) -> arg
-    @createEmptyTerminalView autoRun, shell, args
+    shellEnv = atom.config.get 'platformio-ide-terminal.core.shellEnv'
+    env = {}
+    shellEnv.split(' ').forEach((element) =>
+      configVar = element.split('=')
+      envVar = {}
+      envVar[configVar[0]] = configVar[1]
+      env = _.extend(env, envVar)
+    )
+    @createEmptyTerminalView autoRun, shell, args, env
 
-  createEmptyTerminalView: (autoRun=[], shell = null, args = []) ->
+  createEmptyTerminalView: (autoRun=[], shell = null, args = [], env= {}) ->
     @registerPaneSubscription() unless @paneSubscription?
 
     projectFolder = atom.project.getPaths()[0]
@@ -176,7 +186,7 @@ class StatusBar extends View
     id = filePath: id, folderPath: path.dirname(id)
 
     statusIcon = new StatusIcon()
-    platformIOTerminalView = new PlatformIOTerminalView(id, pwd, statusIcon, this, shell, args, autoRun)
+    platformIOTerminalView = new PlatformIOTerminalView(id, pwd, statusIcon, this, shell, args, env, autoRun)
     statusIcon.initialize(platformIOTerminalView)
 
     platformIOTerminalView.attach()
@@ -315,6 +325,10 @@ class StatusBar extends View
     else if @activeTerminal == null
       @activeTerminal = @terminalViews[0]
     @activeTerminal.toggle()
+
+  clear: ->
+    @destroyActiveTerm()
+    @newTerminalView()
 
   setStatusColor: (event) ->
     color = event.type.match(/\w+$/)[0]

@@ -1,0 +1,79 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+        "spec": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+        "type": "local"
+      },
+      "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/apm-install-dir-118423-22609-1r3tjo1.6k2vhg2e29"
+    ]
+  ],
+  "_from": "../d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+  "_id": "language-javascript-plus@1.9.3",
+  "_inCache": true,
+  "_location": "/language-javascript-plus",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+    "spec": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+    "type": "local"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "file:../d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+  "_shasum": "75f3bdf30c13384f5d3c800cb52dddc1a8e508d1",
+  "_shrinkwrap": null,
+  "_spec": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/d-118423-22609-cnxtef.l1ldsoflxr/package.tgz",
+  "_where": "/private/var/folders/yk/19f0vtr91457jxwlp1b225f00000gn/T/apm-install-dir-118423-22609-1r3tjo1.6k2vhg2e29",
+  "author": {
+    "name": "Alexander Elias"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexanderElias/language-javascript-plus/issues"
+  },
+  "dependencies": {},
+  "description": "Syntax highlighting for template strings in Atom",
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "engines": {
+    "atom": "*"
+  },
+  "homepage": "https://github.com/AlexanderElias/language-javascript-plus#readme",
+  "keywords": [
+    "language",
+    "javascript",
+    "plus",
+    "template",
+    "literals",
+    "syntax",
+    "highliting"
+  ],
+  "license": "MPL-2.0",
+  "main": "index.js",
+  "name": "language-javascript-plus",
+  "optionalDependencies": {},
+  "readme": "\n# JavaScript Plus\nSyntax highlighting for template strings in Atom\n\n## Install\n`apm install language-javascript-plus`\n\n## Usage\nSimply declare a variable, property, template tag, or multiline comment with html, innerHTML, css, or style then use backtick for your template string. HTML and CSS will be using their own syntax highlighting.\n\n## Changes\n- Template not supported any more. Please use the new comment style.\n\n## Triggers\n\n- Comment Style\n\t- `/* html */`\n\t- `/* css */`\n\n- Variable Style\n\t- `template: `\n\t- `template = `\n\t- `.template `\n\t- `html: `\n\t- `html = `\n\t- `.html = `\n\n\t- `css: `\n\t- `css = `\n\t- `.css = `\n\n- These are only supported for native use cases\n\t- `style: `\n\t- `style = `\n\t- `.style = `\n\t- `innerHTML: `\n\t- `innerHTML = `\n\t- `.innerHTML = `\n\n## Authors\n[AlexanderElias](https://github.com/AlexanderElias)\n\n## License\n[Why You Should Choose MPL-2.0](http://veldstra.org/2016/12/09/you-should-choose-mpl2-for-your-opensource-project.html)\nThis project is licensed under the MPL-2.0 License\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AlexanderElias/language-javascript-plus.git"
+  },
+  "scripts": {
+    "cp": "cp -r ../language-javascript-plus ~/.atom/dev/packages/.",
+    "l": "npm run rm && npm run cp && atom --clear-window-state --dev .",
+    "rm": "rm -rf ~/.atom/dev/packages/language-javascript-plus"
+  },
+  "version": "1.9.3"
+}

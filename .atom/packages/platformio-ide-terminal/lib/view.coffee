@@ -26,21 +26,20 @@ class PlatformIOTerminalView extends View
   @content: ->
     @div class: 'platformio-ide-terminal terminal-view', outlet: 'platformIOTerminalView', =>
       @div class: 'panel-divider', outlet: 'panelDivider'
-      @div class: 'btn-toolbar', outlet:'toolbar', =>
-        @button outlet: 'closeBtn', class: 'btn inline-block-tight right', click: 'destroy', =>
-          @span class: 'icon icon-x'
-        @button outlet: 'hideBtn', class: 'btn inline-block-tight right', click: 'hide', =>
-          @span class: 'icon icon-chevron-down'
-        @button outlet: 'maximizeBtn', class: 'btn inline-block-tight right', click: 'maximize', =>
-          @span class: 'icon icon-screen-full'
-        @button outlet: 'inputBtn', class: 'btn inline-block-tight left', click: 'inputDialog', =>
-          @span class: 'icon icon-keyboard'
+      @section class: 'input-block', =>
+        @div class: 'btn-toolbar', =>
+          @div class: 'btn-group', =>
+            @button outlet: 'inputBtn', class: 'btn icon icon-keyboard', click: 'inputDialog'
+          @div class: 'btn-group right', =>
+            @button outlet: 'hideBtn', class: 'btn icon icon-chevron-down', click: 'hide'
+            @button outlet: 'maximizeBtn', class: 'btn icon icon-screen-full', click: 'maximize'
+            @button outlet: 'closeBtn', class: 'btn icon icon-x', click: 'destroy'
       @div class: 'xterm', outlet: 'xterm'
 
   @getFocusedTerminal: ->
     return Terminal.Terminal.focus
 
-  initialize: (@id, @pwd, @statusIcon, @statusBar, @shell, @args=[], @autoRun=[]) ->
+  initialize: (@id, @pwd, @statusIcon, @statusBar, @shell, @args=[], @env={}, @autoRun=[]) ->
     @subscriptions = new CompositeDisposable
     @emitter = new Emitter
 
@@ -71,7 +70,12 @@ class PlatformIOTerminalView extends View
     @xterm.on 'mouseup', (event) =>
       if event.which != 3
         text = window.getSelection().toString()
-        atom.clipboard.write(text) if atom.config.get('platformio-ide-terminal.toggles.selectToCopy') and text
+        if atom.config.get('platformio-ide-terminal.toggles.selectToCopy') and text
+          rawLines = text.split(/\r?\n/g)
+          lines = rawLines.map (line) ->
+            line.replace(/\s/g, " ").trimRight()
+          text = lines.join("\n")
+          atom.clipboard.write(text)
         unless text
           @focus()
     @xterm.on 'dragenter', override
@@ -81,6 +85,9 @@ class PlatformIOTerminalView extends View
     @on 'focus', @focus
     @subscriptions.add dispose: =>
       @off 'focus', @focus
+
+    if /zsh|bash/.test(@shell) and @args.indexOf('--login') == -1 and Pty.platform isnt 'win32' and atom.config.get('platformio-ide-terminal.toggles.loginShell')
+      @args.unshift '--login'
 
   attach: ->
     return if @panel?
@@ -107,7 +114,7 @@ class PlatformIOTerminalView extends View
         @input "#{file.path} "
 
   forkPtyProcess: ->
-    Task.once Pty, path.resolve(@pwd), @shell, @args, =>
+    Task.once Pty, path.resolve(@pwd), @shell, @args, @env, =>
       @input = ->
       @resize = ->
 
@@ -178,7 +185,7 @@ class PlatformIOTerminalView extends View
     @subscriptions.remove @maximizeBtn.tooltip
     @maximizeBtn.tooltip.dispose()
 
-    @maxHeight = @prevHeight + $('.item-views').height()
+    @maxHeight = @prevHeight + atom.workspace.getCenter().paneContainer.element.offsetHeight
     btn = @maximizeBtn.children('span')
     @onTransitionEnd => @focus()
 
@@ -449,8 +456,8 @@ class PlatformIOTerminalView extends View
       editor.moveDown(1);
     @input "#{customText.
       replace(/\$L/, "#{editor.getCursorBufferPosition().row + 1}").
-      replace(/\$F/, path.basename(editor?.buffer?.file?.path)).
-      replace(/\$D/, path.dirname(editor?.buffer?.file?.path)).
+      replace(/\$F/, path.basename(if editor.buffer.getPath() then editor.buffer.getPath() else '.')).
+      replace(/\$D/, path.dirname(if editor.buffer.getPath() then editor.buffer.getPath() else '.')).
       replace(/\$S/, selectionText).
       replace(/\$\$/, '$')}#{if runCommand then os.EOL else ''}"
 

@@ -21,6 +21,13 @@
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 
 '.source.js':
+  'template':
+    'prefix': 'template'
+    'body': """
+    <template>
+      $0
+    </template>
+    """
   'describe':
     'prefix': 'des'
     'body': """
@@ -83,12 +90,118 @@
 
     $0
     """
-'.source.ts':
-  'importer':
-      'prefix': 'ngImp'
-      'body': 'import { $1 } from \'$2\'; $0'
-      
+  'div':
+    'prefix': '<div'
+    'body':"""
+     <div $1>
+     $2
+     </div>
+     $0
+     """
+  'h1':
+    'prefix': '<h1'
+    'body':"""
+     <h1$1> $2 </h1>
+     $0
+     """
+  'h2':
+    'prefix': '<h2'
+    'body':"""
+     <h2$1> $2 </h2>
+     $0
+     """
+  'h3':
+    'prefix': '<h3'
+    'body':"""
+     <h3$1> $2 </h3>
+     $0
+     """
+  'h4':
+    'prefix': '<h4'
+    'body':"""
+     <h4$1> $2 </h4>
+     $0
+     """
+  'p':
+    'prefix': '<p'
+    'body':"""
+     <p$1> $2 </p>
+     $0
+     """
+  'span':
+    'prefix': '<sp'
+    'body':"""
+     <span$1> $2 </span>
+     $0
+     """
+
+
 '.text.html.basic':
   'icon':
       'prefix': 'icon'
       'body': '<i class="fa fa-$1">$0</i>'
+
+'.source.vue':
+  'icon2':
+      'prefix': 'icon'
+      'body': '<i class="fa fa-$1">$0</i>'
+  #
+  # 'script':
+  #   'prefix': 'script'
+  #   'body': """
+  #   <script>
+  #   export default {
+  #     $0
+  #   }
+  #   </script>
+  #   """
+  # 'template2':
+  #   'prefix': 'template'
+  #   'body': """
+  #   <template>
+  #     $0
+  #   </template>
+  #   """
+  # 'methods':
+  #   'prefix':'methods'
+  #   'body': """
+  #   methods:{
+  #     $0
+  #   },
+  #   """
+  # 'components':
+  #   'prefix':'components'
+  #   'body': """
+  #   components:{
+  #     $0
+  #   },
+  #   """
+  # 'computed':
+  #   'prefix':'computed'
+  #   'body': """
+  #   computed:{
+  #     $0
+  #   },
+  #   """
+  # 'data func':
+  #   'prefix':'df'
+  #   'body': """
+  #   data(){
+  #     return {
+  #       $0
+  #       };
+  #   },
+  #   """
+  # 'props':
+  #   'prefix':'prop'
+  #   'body':"""
+  #     props: ['$1',],
+  #     $0
+  #     """
+  # 'data not function':
+  #   'prefix':'dnf'
+  #   'body': """
+  #   data:{
+  #     $0
+  #   }
+  #   """

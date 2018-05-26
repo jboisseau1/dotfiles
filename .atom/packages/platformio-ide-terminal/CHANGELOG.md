@@ -1,3 +1,27 @@
+## 2.8.1 - PlatformIO
+
+* Add compatibility with Atom 1.25
+
+## 2.8.0 - PlatformIO
+
+* Add "clear" item to context menu (re-start terminal)
+* Check if undefined pathname before using for `path.basename` (#434)
+* Fix theme colors for one-dark and solarized-dark (#424)
+
+## 2.7.0 - PlatformIO
+
+* Add extra environment variable to shell execution with `Shell Environment Variables` setting
+* Fix selectToCopy turns space into non-breaking-space (#211)
+* Fix fullscreen toggle (#227)
+
+## 2.6.0 - PlatformIO
+
+* Add predawn theme (#296)
+* Optional --login shell (#294)
+* Toolbar button with atom styleguide (#345)
+* Fix labels rendering outside of Atom's 'editor mini' panel (#339)
+* Fix "Some installed packages could not be loaded..." with a new Atom 1.19
+
 ## 2.5.5 - PlatformIO
 
 * Add compatibility for Atom 1.19
